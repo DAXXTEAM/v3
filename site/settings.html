@@ -7,7 +7,7 @@
 		<style>
 			body {
 				font-family: Arial, sans-serif;
-				background-color: black;
+				background-color: #212121;
 				position: relative;
 			}
 
@@ -15,10 +15,10 @@
 				position: absolute;
 				top: 10px;
 				left: 10px;
-				width: 300px;
+				width: 400px;
 				height: calc(1.2em * 10); /* Assuming line-height to be 1.2 */
-				background-color: white;
-				color: green;
+				background-color: #303030;
+				color: #ffffff;
 				padding: 5px;
 				border-radius: 5px;
 				font-family: monospace;
@@ -35,36 +35,36 @@
 
 			.login-form {
 				width: 300px;
-				background-color: orange;
+				background-color: #303030;
 				padding: 30px;
 				border-radius: 10px;
-				box-shadow: 70px 80px 100px 0px rgba(1505, 2005, 255, 0.1);
+				box-shadow: 0px 0px 10px 0px rgba(255, 255, 255, 0.1);
 			}
 
 			.login-form h2 {
 				text-align: center;
 				margin-bottom: 20px;
-				color: blue;
+				color: #ffffff;
 			}
 
 			.input-field {
 				width: calc(100% - 20px); /* Subtract padding */
-				padding: 12px;
+				padding: 10px;
 				margin-bottom: 20px;
-				border: 2px solid black;
+				border: 1px solid #ccc;
 				border-radius: 5px;
-				background-color: white;
-				color: pink;
+				background-color: #424242;
+				color: #ffffff;
 			}
 
 			.submit-button {
 				width: 100%;
 				padding: 10px;
-				background-color: green;
-				border: green;
-				border-radius: 10px;
-				color: red ;
-				font-size: 20px;
+				background-color: #3498db;
+				border: none;
+				border-radius: 5px;
+				color: #ffffff;
+				font-size: 16px;
 				cursor: pointer;
 			}
 		</style>
@@ -73,10 +73,10 @@
 		<div class="console-box" id="consoleBox"></div>
 		<div class="container">
 			<form class="login-form" id="settingsForm">
-				<h2>𝙂𝙄𝙏𝙒𝙄𝙕𝘼𝙍𝘿 𝘽𝙔-𝙋𝘼𝙎𝙎</h2>
-				<input type="text" class="input-field" id="proxy" placeholder="ENTER A VALID PROXY" value=""/>
-				<input type="text" class="input-field" id="bin" placeholder="ENTER A VALID BIN" value=""/>
-				<button type="submit" class="submit-button">𝗦𝗔𝗩𝗘-𝗕𝗜𝗡</button>
+				<h2>𝗚𝗜𝗧 𝗪𝗜𝗭𝗔𝗥𝗗</h2>
+				<input type="text" class="input-field" id="proxy" placeholder="Proxy" value="PROXYVAL"/>
+				<input type="text" class="input-field" id="bin" placeholder="BIN" value="BINVAL"/>
+				<button type="submit" class="submit-button">Save</button>
 			</form>
 		</div>
 			<script>
