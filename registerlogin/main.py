@@ -84,7 +84,7 @@ def register():
 			"bin": "",
 			"proxy": "",
 			"logs": [
-				"yellow:yellow:Welcome to mohio!"
+				"yellow:yellow:𝚆𝙴𝙻𝙲𝙾𝙼𝙴 𝚃𝙾 𝙶𝙸𝚃𝚆𝙸𝚉𝙰𝚁𝙳 𝙱𝚈 𝙱𝚈-𝙿𝙰𝚂𝚂!"
 			]
 		},
 		"role": "stable",
