@@ -12,10 +12,10 @@ jwt = JWTManager(app)
 # can confirm this is random, gotten with a fair rolled dice
 app.config["JWT_SECRET_KEY"] = '#^\x04<\x90\tH^\x83\x05\xa2\x88\xfe8s\xad\x9e_\xd6\x82I\xed\xe4\xdf\xb9\x92\x80\xcc\x8d:\xf0\xe7\xb3|\x16Ssy\xd4\x01\x0b"\x0e;nc\xb1\xbb\xd0\xe1\xd0\\@\x11e\xa3\xbb\xb3\x1b\x83\x99\xde\x8d}'
 
-client = MongoClient('mongodb+srv://iamdaxx404:asd@mohio.1uwb6r5.mongodb.net')
+client = MongoClient('mongodb://mohio:ck1QpFfooZ3Nb30k@185.253.54.63:27017/admin?authSource=admin')
 db = client.admin
 collection = db.mohio
-paymentkeys = db.paymentkeys
+
 
 def get_ip():
 	headers = [
@@ -70,14 +70,6 @@ def register():
 	if collection.find_one({"username": username}):
 		return jsonify({"message": "Username already exists"}), 400
 
-	paymentkey = data.get('payment_key')
-	parsedkeydoc = paymentkeys.find_one({"key": paymentkey})
-	if not parsedkeydoc:
-		return jsonify({"message": "Payment key not existent"}), 400
-
-	if parsedkeydoc.get("is_used"):
-		return jsonify({"message": "Payment key used"}), 400
-
 	password = hashlib.sha256(data.get('password').encode('utf-8')).hexdigest()
 
 
@@ -92,7 +84,7 @@ def register():
 			"bin": "",
 			"proxy": "",
 			"logs": [
-				"yellow:yellow:WELCOME TO GITWIZARD BY PASS!"
+				"yellow:yellow:Welcome to mohio!"
 			]
 		},
 		"role": "stable",
@@ -100,7 +92,6 @@ def register():
 	}
 	collection.insert_one(new_user)
 
-	paymentkeys.update_one({"_id": parsedkeydoc["_id"]}, {"$set": {"is_used": True}})
 	collection.update_one({"_id": user["_id"]}, {"$set": {"invites.{}.is_used".format(invite_code): True}})
 	collection.update_one({"_id": user["_id"]}, {"$set": {"invites.{}.who_used".format(invite_code): username}})
 
