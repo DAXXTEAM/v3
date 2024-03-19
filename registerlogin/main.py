@@ -58,7 +58,7 @@ def register():
 
 	data = request.get_json()
 	invite_code = data.get('invite_code')
-	user = collection.find_one({"invites.{}".format(invite_code): {"$exists": False}})
+	user = collection.find_one({"invites.{}".format(invite_code): {"$exists": True}})
 	if user is None or user["invites"][invite_code]["is_used"]:
 		return jsonify({"message": "Invalid invite code"}), 200
 
