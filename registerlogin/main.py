@@ -60,23 +60,23 @@ def register():
 	invite_code = data.get('invite_code')
 	user = collection.find_one({"invites.{}".format(invite_code): {"$exists": True}})
 	if user is None or user["invites"][invite_code]["is_used"]:
-		return jsonify({"message": "Invalid invite code"}), 400
+		return jsonify({"message": "Invalid invite code"}), 200
 
 	fingerprint = data.get('fingerprint')
 	if not fingerprint:
-		return jsonify({"message": "Invalid fingerprint"}), 400
+		return jsonify({"message": "Invalid fingerprint"}), 200
 
 	username = data.get('username')
 	if collection.find_one({"username": username}):
-		return jsonify({"message": "Username already exists"}), 400
+		return jsonify({"message": "Username already exists"}), 200
 
 	paymentkey = data.get('payment_key')
 	parsedkeydoc = paymentkeys.find_one({"key": paymentkey})
 	if not parsedkeydoc:
-		return jsonify({"message": "Payment key not existent"}), 400
+		return jsonify({"message": "Payment key not existent"}), 200
 
 	if parsedkeydoc.get("is_used"):
-		return jsonify({"message": "Payment key used"}), 400
+		return jsonify({"message": "Payment key used"}), 200
 
 	password = hashlib.sha256(data.get('password').encode('utf-8')).hexdigest()
 
