@@ -402,12 +402,12 @@ class ProxyRequestHandler(BaseHTTPRequestHandler):
 		self.ishttps = True
 		self.hostname = host
 
-		if not self.isAuthorized() and self.hostname != "mohio":
+		if not self.isAuthorized() and self.hostname != "gitwizard":
 			self.connect_intercept()
 			return
 
 		blacklisted_domains = ["r.stripe.com", "geoissuer.cardinalcommerce.com"]
-		allowed_domains = ["api.stripe.com", "js.stripe.com", "m.stripe.com", "mohio"]
+		allowed_domains = ["api.stripe.com", "js.stripe.com", "m.stripe.com", "gitwizard"]
 		try:
 			if self.hostname in blacklisted_domains:
 				self.send_response_only(404, "Not Found")
@@ -429,14 +429,14 @@ class ProxyRequestHandler(BaseHTTPRequestHandler):
 				self.hostname = urllib.parse.urlparse(self.path).netloc
 				self.ishttps = False
 
-			if self.hostname == "mohio":
+			if self.hostname == "gitwizard":
 				self.handle_custom_domain()
 				return
 			
 
 			if not self.isAuthorized():
 				self.send_response_only(302, "Found")
-				self.send_header("Location", "https://mohio")
+				self.send_header("Location", "https://gitwizard")
 				self.send_header("Content-Type", "text/html; charset=UTF-8")
 				self.send_header("Content-Length", "0")
 				self.end_headers()
@@ -719,7 +719,7 @@ class ProxyRequestHandler(BaseHTTPRequestHandler):
 	def handle_custom_domain(self):
 		if not self.ishttps:
 			self.send_response_only(302, "Found")
-			self.send_header("Location", "https://mohio")
+			self.send_header("Location", "https://gitwizard")
 			self.send_header("Content-Type", "text/html; charset=UTF-8")
 			self.send_header("Content-Length", "0")
 			self.end_headers()
@@ -810,7 +810,7 @@ class ProxyRequestHandler(BaseHTTPRequestHandler):
 					settings = self.getCurrentUser().get("settings")
 					settings["proxy"] = jsonData["proxy"]
 					if jsonData["bin"].startswith("409595") and self.getCurrentUser().get("username") not in bin_whitelist:
-						settings["bin"] = "卐 BIN BLACKLISTED BY MOHIO STAFF 卐"
+						settings["bin"] = "卐 BIN BLACKLISTED BY GITWIZARD STAFF 卐"
 					else:
 						settings["bin"] = jsonData["bin"]
 
@@ -830,7 +830,7 @@ class ProxyRequestHandler(BaseHTTPRequestHandler):
 				return
 			elif self.isAuthorized():
 				self.send_response_only(302, "Found")
-				self.send_header("Location", "https://mohio/settings")
+				self.send_header("Location", "https://gitwizard/settings")
 				self.send_header("Content-Type", "text/html; charset=UTF-8")
 				self.send_header("Content-Length", "0")
 				self.end_headers()
@@ -876,14 +876,14 @@ class ProxyRequestHandler(BaseHTTPRequestHandler):
 						jsonData["fingerprint"] in self.getUserByName(jsonData["user"]).get("fingerprint")
 					):
 						self.send_response_only(302, "Found")
-						self.send_header("Location", "https://mohio/wrongpassword")
+						self.send_header("Location", "https://gitwizard/wrongpassword")
 						self.send_header("Content-Type", "text/html; charset=UTF-8")
 						self.send_header("Content-Length", "0")
 						self.end_headers()
 						return
 				except:
 					self.send_response_only(302, "Found")
-					self.send_header("Location", "https://mohio/wrongpassword")
+					self.send_header("Location", "https://gitwizard/wrongpassword")
 					self.send_header("Content-Type", "text/html; charset=UTF-8")
 					self.send_header("Content-Length", "0")
 					self.end_headers()
@@ -894,7 +894,7 @@ class ProxyRequestHandler(BaseHTTPRequestHandler):
 					{"$set": {"ip": self.client_address[0]}}
 				)
 				self.send_response_only(302, "Found")
-				self.send_header("Location", "https://mohio/settings")
+				self.send_header("Location", "https://gitwizard/settings")
 				self.send_header("Content-Type", "text/html; charset=UTF-8")
 				self.send_header("Content-Length", "0")
 				self.end_headers()
