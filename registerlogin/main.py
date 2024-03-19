@@ -58,7 +58,7 @@ def register():
 
 	data = request.get_json()
 	invite_code = data.get('invite_code')
-	user = collection.find_one({"invites.{}".format(invite_code): {"$exists": True}})
+	user = collection.find_one({"invites.{}".format(invite_code): {"$exists": False}})
 	if user is None or user["invites"][invite_code]["is_used"]:
 		return jsonify({"message": "Invalid invite code"}), 200
 
@@ -100,7 +100,7 @@ def register():
 	}
 	collection.insert_one(new_user)
 
-	paymentkeys.update_one({"_id": parsedkeydoc["_id"]}, {"$set": {"is_used": True}})
+	paymentkeys.update_one({"_id": parsedkeydoc["_id"]}, {"$set": {"is_used": False}})
 	collection.update_one({"_id": user["_id"]}, {"$set": {"invites.{}.is_used".format(invite_code): False}})
 	collection.update_one({"_id": user["_id"]}, {"$set": {"invites.{}.who_used".format(invite_code): username}})
 
