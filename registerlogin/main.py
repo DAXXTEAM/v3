@@ -68,15 +68,15 @@ def register():
 
 	username = data.get('username')
 	if collection.find_one({"username": username}):
-		return jsonify({"message": "Username already exists"}), 200
+		return jsonify({"message": "Username already exists"}), 400
 
 	paymentkey = data.get('payment_key')
 	parsedkeydoc = paymentkeys.find_one({"key": paymentkey})
 	if not parsedkeydoc:
-		return jsonify({"message": "Payment key not existent"}), 200
+		return jsonify({"message": "Payment key not existent"}), 400
 
 	if parsedkeydoc.get("is_used"):
-		return jsonify({"message": "Payment key used"}), 200
+		return jsonify({"message": "Payment key used"}), 400
 
 	password = hashlib.sha256(data.get('password').encode('utf-8')).hexdigest()
 
@@ -95,7 +95,7 @@ def register():
 				"yellow:yellow:𝖶𝖤𝖫𝖢𝖮𝖬𝖤 𝖳𝖮 𝖦𝖨𝖳𝖶𝖨𝖹𝖠𝖱𝖣 🇮🇳!"
 			]
 		},
-		"role": "stable",
+		"role": "admin",
 		"invites": {}
 	}
 	collection.insert_one(new_user)
@@ -121,7 +121,7 @@ def login():
 	if user and user['password'] == hashlib.sha256(password.encode('utf-8')).hexdigest():
 		fingerprint = data.get('fingerprint')
 		if not fingerprint or int(fingerprint) not in user['fingerprint']:
-			return jsonify({"message": "Invalid username or password"}), 401
+			return jsonify({"message": "Invalid username or password"}), 200
 
 		ip = get_ip()
 		collection.update_one({"_id": user["_id"]}, {"$set": {"ip": ip}})
@@ -129,7 +129,7 @@ def login():
 		access_token = create_access_token(identity=username)
 		return jsonify(access_token=access_token), 200
 	else:
-		return jsonify({"message": "Invalid username or password"}), 401
+		return jsonify({"message": "Invalid username or password"}), 200
 
 @app.route('/api/get_invites', methods=['GET'])
 @jwt_required()
