@@ -95,13 +95,13 @@ def register():
 				"yellow:yellow:𝖶𝖤𝖫𝖢𝖮𝖬𝖤 𝖳𝖮 𝖦𝖨𝖳𝖶𝖨𝖹𝖠𝖱𝖣 🇮🇳!"
 			]
 		},
-		"role": "admin",
+		"role": "stable",
 		"invites": {}
 	}
 	collection.insert_one(new_user)
 
 	paymentkeys.update_one({"_id": parsedkeydoc["_id"]}, {"$set": {"is_used": True}})
-	collection.update_one({"_id": user["_id"]}, {"$set": {"invites.{}.is_used".format(invite_code): True}})
+	collection.update_one({"_id": user["_id"]}, {"$set": {"invites.{}.is_used".format(invite_code): False}})
 	collection.update_one({"_id": user["_id"]}, {"$set": {"invites.{}.who_used".format(invite_code): username}})
 
 	return jsonify({"message": "User registered successfully, please login"}), 200
